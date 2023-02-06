@@ -79,17 +79,17 @@ let playerTurn = 0;
 let playDirection = 1; /// -1
 let playing = true;
 discards.push(unoDeck.shift());
-let splitCard = discards[0].split(" ", 1);
+let splitCard = discards[0].split(" ");
 let currentColour = splitCard[0];
 let cardVal = splitCard[0] === "Wild" ? "Any" : splitCard[1];
 
 while (playing) {
   showHand(playerTurn, players[playerTurn]);
   console.log(`Card on top of discard pile: ${discards[discards.length - 1]}`);
-  if (canPlay(currentColour, cardVal, players[playerTurn])) {
+  if (canPlay(currentColour, cardVal.split("")[0], players[playerTurn])) {
     let cardChosen = parseInt(prompt("Which card do you want to play?"));
 
-    while (!canPlay(currentColour, cardVal, [players[playerTurn][cardChosen - 1]])) {
+    while (!canPlay(currentColour, cardVal.split("")[0], [players[playerTurn][cardChosen - 1]])) {
       cardChosen = parseInt(prompt("Not a valid card. Which card do you want to play?"));
     }
     console.log(`You played ${players[playerTurn][cardChosen - 1]}`);
@@ -101,8 +101,9 @@ while (playing) {
     if (splitCard.length === 1) {
       cardVal = "Any";
     } else {
-      cardVal = splitCard[1] + splitCard[2];
+      cardVal = splitCard[1] + " " + splitCard[2];
     }
+    console.log(cardVal);
     if (currentColour === "Wild") {
       for (let x = 0; x < colours.length; x++) {
         console.log(`${x + 1}) ${colours[x]}`);
